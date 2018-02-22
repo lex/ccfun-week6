@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <Students/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Students from './components/Students';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Students,
+  },
+  created() {
+    document.title = 'Course Management';
   },
 };
 </script>
