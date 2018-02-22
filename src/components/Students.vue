@@ -20,9 +20,9 @@
     </section>
 
     <section>
-      <input type="text" name="mark-done-id" id="mark-done-id" placeholder="ID">
-      <input type="text" name="mark-done-name" id="mark-done-name" placeholder="Task">
-      <input type="button" name="mark-done-submit" id="mark-done-submit" value="Mark task done">
+      <input type="text" name="mark-done-id" id="mark-done-id" placeholder="ID" v-model="markDoneId">
+      <input type="text" name="mark-done-name" id="mark-done-name" placeholder="Task" v-model="markDoneTask">
+      <input type="button" name="mark-done-submit" id="mark-done-submit" value="Mark task done" v-on:click="markDone">
     </section>
 
     <section id="output">
@@ -44,6 +44,8 @@ export default {
       getOneId: '',
       addId: '',
       removeId: '',
+      markDoneId: '',
+      markDoneTask: '',
     };
   },
   methods: {
@@ -72,6 +74,16 @@ export default {
       axios.post(`${this.baseUrl}/post/remove`, body).then(({ data }) => {
         this.data = data;
         this.removeId = '';
+      });
+    },
+    markDone() {
+      const body = {
+        Item: { id: this.markDoneId, [this.markDoneTask]: 'COMPLETED' },
+      };
+      axios.post(`${this.baseUrl}/post/mark-done`, body).then(({ data }) => {
+        this.data = data;
+        this.markDoneId = '';
+        this.markDoneTask = '';
       });
     },
   },
