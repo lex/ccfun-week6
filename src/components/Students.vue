@@ -10,8 +10,8 @@
     </section>
 
     <section>
-      <input type="text" name="add-id" id="add-id" placeholder="ID">
-      <input type="button" name="add-submit" id="add-submit" value="Add new student">
+      <input type="text" name="add-id" id="add-id" placeholder="ID" v-model="addId">
+      <input type="button" name="add-submit" id="add-submit" value="Add new student" v-on:click="add">
     </section>
 
     <section>
@@ -42,6 +42,7 @@ export default {
         'https://wg5w99wdwb.execute-api.eu-west-1.amazonaws.com/production',
       data: '',
       getOneId: '',
+      addId: '',
     };
   },
   methods: {
@@ -56,6 +57,12 @@ export default {
         .then(({ data }) => {
           this.data = data;
         });
+    },
+    add() {
+      const body = { Items: [{ id: this.addId }] };
+      axios.post(`${this.baseUrl}/post/add`, body).then(({ data }) => {
+        this.data = data;
+      });
     },
   },
 };
