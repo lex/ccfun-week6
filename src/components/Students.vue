@@ -5,8 +5,8 @@
     </section>
 
     <section>
-      <input type="text" name="get-one-id" id="get-one-id" placeholder="ID">
-      <input type="button" name="get-one-submit" id="get-one-submit" value="Get student by ID">
+      <input type="text" name="get-one-id" id="get-one-id" placeholder="ID" v-model="getOneId">
+      <input type="button" name="get-one-submit" id="get-one-submit" value="Get student by ID" v-on:click="getById">
     </section>
 
     <section>
@@ -41,6 +41,7 @@ export default {
       baseUrl:
         'https://wg5w99wdwb.execute-api.eu-west-1.amazonaws.com/production',
       data: '',
+      getOneId: '',
     };
   },
   methods: {
@@ -48,6 +49,13 @@ export default {
       axios.get(`${this.baseUrl}/get/all`).then(({ data }) => {
         this.data = data;
       });
+    },
+    getById() {
+      axios
+        .get(`${this.baseUrl}/get/one?id=${this.getOneId}`)
+        .then(({ data }) => {
+          this.data = data;
+        });
     },
   },
 };
