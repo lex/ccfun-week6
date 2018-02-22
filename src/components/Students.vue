@@ -1,7 +1,7 @@
 <template>
   <div class="students">
     <section>
-      <input type="button" value="Get all students" name="get-all" id="get-all">
+      <input type="button" value="Get all students" name="get-all" id="get-all" v-on:click="getAll">
     </section>
 
     <section>
@@ -26,21 +26,33 @@
     </section>
 
     <section id="output">
-
+      {{ data }}
     </section>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Students',
   data() {
-    return {};
+    return {
+      baseUrl:
+        'https://wg5w99wdwb.execute-api.eu-west-1.amazonaws.com/production',
+      data: '',
+    };
+  },
+  methods: {
+    getAll() {
+      axios.get(`${this.baseUrl}/get/all`).then(({ data }) => {
+        this.data = data;
+      });
+    },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .students {
   max-width: 800px;
