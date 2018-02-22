@@ -15,8 +15,8 @@
     </section>
 
     <section>
-      <input type="text" name="remove-id" id="remove-id" placeholder="ID">
-      <input type="button" name="remove-submit" id="remove-submit" value="Remove student">
+      <input type="text" name="remove-id" id="remove-id" placeholder="ID" v-model="removeId">
+      <input type="button" name="remove-submit" id="remove-submit" value="Remove student" v-on:click="remove">
     </section>
 
     <section>
@@ -43,6 +43,7 @@ export default {
       data: '',
       getOneId: '',
       addId: '',
+      removeId: '',
     };
   },
   methods: {
@@ -56,12 +57,21 @@ export default {
         .get(`${this.baseUrl}/get/one?id=${this.getOneId}`)
         .then(({ data }) => {
           this.data = data;
+          this.getOneId = '';
         });
     },
     add() {
       const body = { Items: [{ id: this.addId }] };
       axios.post(`${this.baseUrl}/post/add`, body).then(({ data }) => {
         this.data = data;
+        this.addId = '';
+      });
+    },
+    remove() {
+      const body = { Items: [{ id: this.removeId }] };
+      axios.post(`${this.baseUrl}/post/remove`, body).then(({ data }) => {
+        this.data = data;
+        this.removeId = '';
       });
     },
   },
